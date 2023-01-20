@@ -5,8 +5,8 @@ let buttonColors = ['primary', 'secondary', 'success', 'warning', 'danger', 'inf
 
 // Get the color buttons
 let colorButtons = document.querySelectorAll('.col-2 > button')
-console.log(colorButtons);
-console.log(buttonColors);
+// console.log(colorButtons);
+// console.log(buttonColors);
 
 // Loop through the buttons and apply button color to class name
 for (let i = 0; i < colorButtons.length; i++){
@@ -25,13 +25,13 @@ newHeader.id = 'myHeader';
 newHeader.className = 'text-center mt-3'
 newHeader.innerHTML = 'Created by Brian with the help of JavaScript';
 newHeader.style.color = 'black';
-console.log(newHeader);
+// console.log(newHeader);
 
 // Add the header after the button row
 // Get the row of buttons
 let allRows = document.getElementsByClassName('row');
 let buttonRow = allRows[0];
-console.log(buttonRow);
+// console.log(buttonRow);
 
 // Add the new header AFTER the button row (vs appending as the last child of button row)
 
@@ -51,3 +51,35 @@ function handleHeaderEvent(event){
 
 // Add the handleHeaderEvent as an event listener on the header
 newHeader.addEventListener('mouseover', handleHeaderEvent);
+
+
+// Grab the form
+let form = document.getElementById('countryForm');
+// console.log(form);
+
+async function handleFormSubmit(e){
+    e.preventDefault(); // Prevent the event from refreshing the page
+    // console.log(e);
+    let countryName = e.target.countryName.value;
+    console.log(countryName);
+
+    let countryInfo = await getCountryInfo(countryName);
+    console.log(countryInfo);
+    // Clear the input box at the end
+    e.target.countryName.value = '';
+};
+
+form.addEventListener('submit', handleFormSubmit);
+
+// Function that takes in a country name, makes a GET request to API, returns data
+async function getCountryInfo(countryName){
+    let response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+    let data = await response.json();
+    return data[0]
+}
+
+// function getCountryInfo2(countryName){
+//     return fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+//         .then(res => res.json())
+//         .then(data => data[0])
+// }
