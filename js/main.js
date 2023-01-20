@@ -11,6 +11,11 @@ console.log(buttonColors);
 // Loop through the buttons and apply button color to class name
 for (let i = 0; i < colorButtons.length; i++){
     colorButtons[i].className = `btn btn-${buttonColors[i]}`
+    // add an event listener to change the body background color (via Bootstrap class)
+    colorButtons[i].addEventListener('click', () => {
+        let body = document.body;
+        body.className = `bg-${buttonColors[i]}`
+    })
 }
 
 // Create a new header and add it under the buttons in the container, but before the form row
@@ -19,6 +24,7 @@ let newHeader = document.createElement('h4');
 newHeader.id = 'myHeader';
 newHeader.className = 'text-center mt-3'
 newHeader.innerHTML = 'Created by Brian with the help of JavaScript';
+newHeader.style.color = 'black';
 console.log(newHeader);
 
 // Add the header after the button row
@@ -30,3 +36,18 @@ console.log(buttonRow);
 // Add the new header AFTER the button row (vs appending as the last child of button row)
 
 buttonRow.after(newHeader);
+
+// Create a listener function - function to be executed when our event triggers
+function handleHeaderEvent(event){
+    // console.log(event);
+    let elementToChange = event.target;
+    // console.log(elementToChange);
+    if (elementToChange.style.color === 'black'){
+        elementToChange.style.color = 'red';
+    } else {
+        elementToChange.style.color = 'black';
+    }
+}
+
+// Add the handleHeaderEvent as an event listener on the header
+newHeader.addEventListener('mouseover', handleHeaderEvent);
